@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Dashboard</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true" style="height:100%; width:100%">
+		<p:layoutUnit position="center" style="height: 100%; width:100%">
+			<h:panelGrid style="width:100%; height:2%">
+				<p:row>
+					<p:column>
+						<h6>
+							<h:outputText value="Welcome : " />
+							<h:outputText value="#{user.username}" />
+						</h6>
+					</p:column>
+				</p:row>
+			</h:panelGrid>
+			<p:tabView id="tabView" style="height: 100%; width:100%">
+
+				<p:tab id="tba1" title="Order Details" style="height: 100%;">
+					<p:dataTable colspan="2" style="height: 100%; width:100%">
+						<p:column headerText="Order" />
+						<p:column headerText="Order Date" />
+						<p:column headerText="Amount" />
+					</p:dataTable>
+				</p:tab>
+
+				<p:tab id="tab2" title="Order Product">
+				<h:form id="orderForm">
+					<h:panelGrid columns="2" style="height: 40%;width: 50%">
+						<h:outputText value="Product : " />
+						<p:selectOneMenu id="combo" value="#{product.product}"
+							style="width: 210px">
+							<f:ajax listener="#{product.setProductRate}" execute="combo"
+								render="rate" />
+							<f:selectItems value="#{product.list}" />
+						</p:selectOneMenu>
+						<h:outputText value="Rate : " />
+						<p:inputText id="rate" value="#{product.rate}" disabled="true"
+							style="width: 210px"></p:inputText>
+						<h:outputText value="Quantity : " />
+						<p:spinner id="spin" min="1" max="1000" style="width: 210px">
+							<f:ajax listener="#{product.setTotalRate}" execute="spin"
+								render="total" />
+						</p:spinner>
+						<h:outputText value="Total Value : " />
+						<p:inputText id="total" disabled="true" style="width: 210px"></p:inputText>
+						<p:commandButton action="#{user.placeOrder}" value="Order"
+							update="orderForm" ajax="true"></p:commandButton>
+					</h:panelGrid>
+					</h:form>
+				</p:tab>
+			</p:tabView>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

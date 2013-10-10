@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>User</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body style="background-color: white">
+	<p:spacer style="height: 200"></p:spacer>
+	<center>
+		<p:fieldset legend="Registration Form" style="width: 400px;">
+			<h:form id="registrationForm" columns="3" class="formTable">
+				<h:panelGrid id="userPanel" columns="2">
+					Username : 		
+					<p:inputText id="username" value="#{user.username}" required="true"
+						requiredMessage="Username is required"></p:inputText>
+					Password : 
+					<p:password id="password" value="#{user.password}" feedback="true"
+						required="true" requiredMessage="Password is required" match="confirmpassword"></p:password>
+					Confirm Password : 
+					<p:password id="confirmpassword" value="#{user.password}" feedback="true"
+						required="true" requiredMessage="Confirm Password is required"></p:password>
+					<p:spacer></p:spacer>
+					<p:commandButton action="#{user.submitUser}" value="Submit"
+						update="registrationForm" ajax="true"></p:commandButton>
+					<p:spacer></p:spacer>
+					<p:growl value="#{user.message}" sticky="true"/>
+				</h:panelGrid>
+			</h:form>
+		</p:fieldset>
+	</center>
+</h:body>
+</html>

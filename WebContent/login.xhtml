@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Login</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body style="background-color: white">
+	<p:spacer style="height: 200px"></p:spacer>
+	<center>
+		<h:form id="loginForm">
+			<div style="width: 370px;">
+				<p:panel style="width: 370px; border: 1px solid" header="Reporting Tool Login">
+					<h:panelGrid id="loginPanel" columns="1" >
+						<h:outputText value="Username" />
+						<p:inputText id="username" value="#{user.username}"
+							required="true" requiredMessage="Username is required"></p:inputText>
+						<p:spacer></p:spacer>
+						<h:outputText value="Password" />
+						<p:password id="password" value="#{user.password}" feedback="true"
+							required="true" requiredMessage="Password is required">
+						</p:password>
+						<p:spacer></p:spacer>
+						<p:growl value="#{user.message}" sticky="true" />
+						<p:spacer></p:spacer>
+						<p:commandButton action="#{user.loginProject}" value="Login"
+							update="loginForm" ajax="true"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</div>
+		</h:form>
+		<h:form>
+				<h:panelGrid id="loginFooter" columns="3">
+					<p:commandLink value="Register Now?" action="#{user.register}"
+						ajax="true" style="font: bold 12px Arial"></p:commandLink>
+					<h:outputText value="|" />
+					<p:commandLink value="Lost your Password?"
+						action="#{user.lostPassword}" ajax="true"
+						style="font: bold 12px Arial"></p:commandLink>
+				</h:panelGrid>
+		</h:form>
+
+	</center>
+</h:body>
+</html>
