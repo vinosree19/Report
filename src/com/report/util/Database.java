@@ -10,12 +10,10 @@ public class Database {
 	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/report", "root", "root");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/report", "root", "root");
 			return con;
 		} catch (Exception ex) {
-			System.out.println("Database.getConnection() Error -->"
-					+ ex.getMessage());
+			System.out.println("Database.getConnection() Error -->" + ex.getMessage());
 			return null;
 		}
 	}
@@ -27,8 +25,7 @@ public class Database {
 		}
 	}
 
-	public static String encodePassword(String password)
-			throws NoSuchAlgorithmException {
+	public static String encodePassword(String password) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		byte[] msg = password.getBytes();
 		md.update(msg);

@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import com.report.dao.OrderDAO;
 import com.report.dao.ProductDAO;
 import com.report.dao.UserDAO;
 import com.report.util.Util;
@@ -18,16 +19,16 @@ import com.report.util.Util;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String userid;
+	private Integer userid;
 	private String username;
 	private String password;
 	private String message;
 
-	public String getUserid() {
+	public Integer getUserid() {
 		return userid;
 	}
 
-	public void setUserid(String userid) {
+	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
 
@@ -54,21 +55,21 @@ public class User implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-		public String loginProject() throws NoSuchAlgorithmException {
+
+	public String loginProject() throws NoSuchAlgorithmException {
 		String result = UserDAO.login(username, password);
 		if (result != null && result != "") {
 			setEmpty();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Invalid Login! Please Try Again!",
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login! Please Try Again!",
 							"Please Try Again!"));
 			return "login";
 		} else {
 			HttpSession session = Util.getSession();
 			session.setAttribute("username", username);
-			ProductDAO.initProduct();
+			ProductDAO.initProduct(username);
+			OrderDAO.getOrder(username);
 			return "dashboard";
 		}
 	}
@@ -89,24 +90,18 @@ public class User implements Serializable {
 		return null;
 	}
 
-
-
 	public String submitUser() throws NoSuchAlgorithmException {
 		String result = UserDAO.register(username, password);
 		setEmpty();
 		if (result.equalsIgnoreCase("SUCCESS")) {
 			return "login";
 		} else if (result.equalsIgnoreCase("USER")) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"User Already Exist!", "Please Try Again!"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "User Already Exist!", "Please Try Again!"));
 			return "user";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Invalid Login!", "Please Try Again!"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please Try Again!"));
 			return "user";
 		}
 	}

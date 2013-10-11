@@ -23,9 +23,9 @@ public class UserDAO {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				if (rs.getString("username").equalsIgnoreCase(username)
-						 && rs.getString("password").equalsIgnoreCase(pwd))
+						&& rs.getString("password").equalsIgnoreCase(pwd))
 					return null;
-				else 
+				else
 					return "Please Enter the Valid Username and Password";
 			} else {
 				return "Please Enter the Valid Username and Password";
@@ -45,9 +45,8 @@ public class UserDAO {
 			connection = Database.getConnection();
 			if (checkUser(connection, ps, username)) {
 				String pwd = Database.encodePassword(password);
-				ps = connection
-						.prepareStatement("INSERT INTO user_t (username, password, active) "
-								+ "VALUES (?, ?, ?) ");
+				ps = connection.prepareStatement("INSERT INTO user_t (username, password, active) "
+						+ "VALUES (?, ?, ?) ");
 				ps.setString(1, username);
 				ps.setString(2, pwd);
 				ps.setString(3, "Y");
@@ -61,19 +60,16 @@ public class UserDAO {
 				return "USER";
 			}
 		} catch (SQLException ex) {
-			System.out.println("Error in User Registration -->"
-					+ ex.getMessage());
+			System.out.println("Error in User Registration -->" + ex.getMessage());
 			return "FAIL";
 		} finally {
 			Database.close(connection);
 		}
 	}
 
-	private static boolean checkUser(Connection connection,
-			PreparedStatement ps, String username) {
+	private static boolean checkUser(Connection connection, PreparedStatement ps, String username) {
 		try {
-			ps = connection.prepareStatement("SELECT username, password "
-					+ "FROM user_t WHERE username= ? ");
+			ps = connection.prepareStatement("SELECT username, password " + "FROM user_t WHERE username= ? ");
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -81,8 +77,7 @@ public class UserDAO {
 					return false;
 			}
 		} catch (SQLException ex) {
-			System.out.println("Error in Check User Exist -->"
-					+ ex.getMessage());
+			System.out.println("Error in Check User Exist -->" + ex.getMessage());
 			return false;
 		}
 		return true;

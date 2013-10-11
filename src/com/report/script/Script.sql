@@ -34,7 +34,23 @@ CREATE TABLE user_t
         username VARCHAR(15) NOT NULL,
         password VARCHAR(100) NOT NULL,
         active CHAR(1),
-        PRIMARY KEY (user_id)
+        PRIMARY KEY (user_id, username)
 ) ENGINE=INNODB;
 
 ALTER TABLE user_t AUTO_INCREMENT = 1001;
+
+DROP TABLE order_t;
+
+CREATE TABLE order_t
+(
+		order_num SMALLINT(6) NOT NULL AUTO_INCREMENT,
+		order_date DATETIME NOT NULL,
+		product VARCHAR(10) NOT NULL,
+		quantity DECIMAL(10,2) NOT NULL,
+		total DECIMAL(10,2) NOT NULL,
+		salesman VARCHAR(15) NOT NULL,
+		PRIMARY KEY (order_num),
+		FOREIGN KEY (product) REFERENCES product_t(prod_id)
+) ENGINE=INNODB;
+
+ALTER TABLE order_t AUTO_INCREMENT = 1001;
