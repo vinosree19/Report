@@ -14,12 +14,15 @@ public class Dashboard implements Serializable {
 	private static List<Order> orderList;
 	private Order selectedOrder;
 
-	public static List<Order> getOrderList() {
+	public Dashboard() {
+	}
+
+	public List<Order> getOrderList() {
 		return orderList;
 	}
 
 	public void setOrderList(List<Order> orderList) {
-		this.orderList = orderList;
+		Dashboard.orderList = orderList;
 	}
 
 	public Order getSelectedOrder() {

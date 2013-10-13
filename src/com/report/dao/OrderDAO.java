@@ -14,7 +14,8 @@ import com.report.util.Database;
 
 public class OrderDAO {
 
-	public static boolean order(String prodid, Double quantity, Double total, String salesman) {
+	public static boolean order(String prodid, Double quantity, Double total,
+			String salesman) {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		Date date = new Date();
@@ -50,22 +51,22 @@ public class OrderDAO {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				if (rs.getString("salesman").equalsIgnoreCase(username)) {
-					Order order = new Order(rs.getInt("order_num"), (Date) rs.getDate("order_date"),
-							rs.getString("product"), rs.getDouble("quantity"), rs.getDouble("total"),
-							rs.getString("salesman"));
+					Order order = new Order(rs.getInt("order_num"),
+							(Date) rs.getDate("order_date"),
+							rs.getString("product"), rs.getDouble("quantity"),
+							rs.getDouble("total"), rs.getString("salesman"));
 					list.add(order);
 				}
 			}
 			dashboard.setOrderList(list);
 		} catch (Exception ex) {
 			System.out.println("Error in getOrder() -->" + ex.getMessage());
-			return null;
 		} finally {
 			Database.close(connection);
 		}
-		return null;
+		return list;
 	}
 
 }

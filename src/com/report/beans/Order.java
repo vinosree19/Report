@@ -9,8 +9,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.report.dao.OrderDAO;
+import com.report.util.Util;
 
 @ManagedBean(name = "order")
 @SessionScoped
@@ -22,7 +24,8 @@ public class Order implements Serializable {
 	private String prodid;
 	private Double quantity;
 	private Double total;
-	private String salesman;
+	private static String salesman;
+	private String desc;
 
 	private Double rate;
 	private static List<Product> productList;
@@ -30,16 +33,16 @@ public class Order implements Serializable {
 	private static Map<String, Double> map;
 
 	public Order() {
-
 	}
 
-	public Order(Integer ordernumIn, Date dateIn, String prodidIn, Double quantityIn, Double totalIn, String salesmanIn) {
+	public Order(Integer ordernumIn, Date dateIn, String prodidIn,
+			Double quantityIn, Double totalIn, String salesmanIn) {
 		this.ordernum = ordernumIn;
 		this.date = dateIn;
 		this.prodid = prodidIn;
 		this.quantity = quantityIn;
 		this.total = totalIn;
-		this.salesman = salesmanIn;
+		Order.salesman = salesmanIn;
 	}
 
 	public Integer getOrdernum() {
@@ -87,7 +90,7 @@ public class Order implements Serializable {
 	}
 
 	public void setSalesman(String salesman) {
-		this.salesman = salesman;
+		Order.salesman = salesman;
 	}
 
 	public Double getRate() {
@@ -103,7 +106,7 @@ public class Order implements Serializable {
 	}
 
 	public void setProductList(List<Product> productList) {
-		this.productList = productList;
+		Order.productList = productList;
 	}
 
 	public List<String> getList() {
@@ -111,7 +114,7 @@ public class Order implements Serializable {
 	}
 
 	public void setList(List<String> list) {
-		this.list = list;
+		Order.list = list;
 	}
 
 	public Map<String, Double> getMap() {
@@ -119,7 +122,15 @@ public class Order implements Serializable {
 	}
 
 	public void setMap(Map<String, Double> map) {
-		this.map = map;
+		Order.map = map;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public void setProductRate() {
@@ -134,16 +145,29 @@ public class Order implements Serializable {
 
 	public String placeOrder() {
 		if (prodid.equals("--SELECT--")) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Please select the product", "Please!"));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Please select the product", "Please!"));
 		} else {
 			boolean result = OrderDAO.order(prodid, quantity, total, salesman);
 			if (result) {
-				return "dashboard";
-			} else {
 				return "login";
+			} else {
+				setEmpty();
+				HttpSession session = Util.getSession();
+				OrderDAO.getOrder(session.getAttribute("username").toString());
+				return "dashboard";
 			}
 		}
 		return null;
 	}
+
+	private void setEmpty() {
+		this.prodid = "";
+		this.quantity = 1.0;
+		this.total = 0.0;
+		this.rate = 0.0;
+	}
+
 }

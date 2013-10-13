@@ -9,13 +9,13 @@
 	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
 </h:head>
 <h:body>
-	<p:layout fullPage="true" style="height:100%; width:100%">
-		<p:layoutUnit position="center" style="height: 100%; width:100%">
-			<table style="width: 100%; height: 2%">
+	<p:layout fullPage="true" style="height:100%; width:100%;">
+		<p:layoutUnit position="center">
+			<table style="width: 100%;">
 				<tr>
-					<td style="padding-top: 15px" align="left">
+					<td style="padding-top: 10px" align="left">
 						<h4>
-							<h:outputText value="Welcome : " />
+							<h:outputText value="Welcome! : " />
 							<h:outputText value="#{user.username}" />
 						</h4>
 					</td>
@@ -23,47 +23,50 @@
 							value="SignOut" ajax="true"></p:commandButton></td>
 				</tr>
 			</table>
-			<p:tabView id="tabView" style="height: 80%; width:100%">
+			<p:tabView id="tabView" style="height: 75%; width:100%;">
 
 				<p:tab id="tba1" title="Order Details" style="height: 100%;">
-					<h:form>
+					<h:form id="form" style="height: 100%; width:100%">
 
 						<p:dataTable colspan="2" style="height: 100%; width:100%"
-							var="order" value="#{dashboard.orderList}"
+							paginator="true" rows="10" var="orders"
+							value="#{dashboard.orderList}" rowKey="#{orders.ordernum}"
 							selection="#{dashboard.selectedOrder}" selectionMode="single"
-							paginator="true" rows="10">
-							<p:column headerText="Order" sortBy="order" filterBy="order"
-								id="order">#{order.ordernum}</p:column>
-							<p:column headerText="Order Date" sortBy="orderdate"
-								filterBy="orderdate" id="orderdate">#{order.date}</p:column>
-							<p:column headerText="Amount" sortBy="orderamt"
-								filterBy="orderamt" id="orderamt">#{order.total}</p:column>
+							rowIndexVar="rowIndex">
+							<p:ajax event="rowSelect" update=":tabView:form:display"
+								oncomplete="orderDialog.show()" />
+							<p:column headerText="Order" sortBy="ordernum"
+								filterBy="ordernum" id="ordernum">#{orders.ordernum}</p:column>
+							<p:column headerText="Order Date" sortBy="date" filterBy="date"
+								id="date">#{orders.date}</p:column>
+							<p:column headerText="Amount" sortBy="total" filterBy="total"
+								id="total">#{orders.total}</p:column>
 						</p:dataTable>
 
 						<p:dialog header="Order Detail" widgetVar="orderDialog"
 							resizable="false" width="500">
 							<h:panelGrid id="display" columns="2" cellpadding="4">
-								<h:outputText value="Order Num:" />
+								<h:outputText value="Order Num: " />
 								<h:outputText value="#{dashboard.selectedOrder.ordernum}"
-									id="order" />
+									id="ordernum" />
 
-								<h:outputText value="Order Date:" />
+								<h:outputText value="Order Date: " />
 								<h:outputText value="#{dashboard.selectedOrder.date}" id="date" />
 
-								<h:outputText value="Product:" />
+								<h:outputText value="Product: " />
 								<h:outputText value="#{dashboard.selectedOrder.prodid}"
-									id="product" />
-								<h:outputText value="Quantity:" />
+									id="prodid" />
+								<h:outputText value="Quantity: " />
 								<h:outputText value="#{dashboard.selectedOrder.quantity}"
 									id="quantity" />
 
-								<h:outputText value="Amount" />
+								<h:outputText value="Amount : " />
 								<h:outputText value="#{dashboard.selectedOrder.total}"
 									id="total" />
 
-								<h:outputText value="Salesman" />
+								<h:outputText value="Salesman : " />
 								<h:outputText value="#{dashboard.selectedOrder.salesman}"
-									id="total" />
+									id="salesman" />
 							</h:panelGrid>
 						</p:dialog>
 					</h:form>
@@ -97,6 +100,43 @@
 								update="orderForm" ajax="true"></p:commandButton>
 							<p:growl sticky="true" />
 						</h:panelGrid>
+					</h:form>
+				</p:tab>
+				<p:tab id="tab3" title="Report-1">
+					<h:form id="reportForm">
+						<table style="width: 100%;">
+							<tr style="width: 100%">
+								<td style="width: 100%" colspan="3"><h:outputText
+										value="From : " /> <p:calendar value="#{report1.frmDate}"
+										required="true" requiredMessage="From Date is required" /> <p:spacer
+										style="width: 10px"></p:spacer> <h:outputText value="To : " />
+									<p:calendar value="#{report1.toDate}" required="true"
+										requiredMessage="To Date is required" /> <p:spacer
+										style="width: 10px"></p:spacer> <p:commandButton
+										action="#{report1.generate}" value="GO" update="reportForm"
+										ajax="false">
+										<f:actionListener binding="#{bubbleChartBean.refreshChart()}" />
+										<f:actionListener binding="#{pieChartBean.refreshChart()}" />
+									</p:commandButton></td>
+							</tr>
+							<tr style="width: 100%">
+								<td style="width: 25%"><p:dataTable rows="6"
+										paginator="true" var="orders"
+										value="#{searchGridBean.orderList}">
+										<p:column headerText="Product" id="prodid">#{orders.prodid}</p:column>
+										<p:column headerText="Product Description" id="desc">#{orders.desc}</p:column>
+										<p:column headerText="Quantity" id="quantity">#{orders.quantity}</p:column>
+										<p:column headerText="Total Value" id="total">#{orders.total}</p:column>
+									</p:dataTable></td>
+								<td style="width: 30%"><p:bubbleChart
+										value="#{bubbleChartBean.model}" style="width:100%"
+										xaxisLabel="Total Value" yaxisLabel="Quantity" /></td>
+								<td style="width: 30%"><p:pieChart id="pieChart"
+										value="#{pieChartBean.model}" style="width:100%"
+										orientation="horizontal" legendPosition="w" /></td>
+							</tr>
+						</table>
+						<p:growl sticky="true" />
 					</h:form>
 				</p:tab>
 			</p:tabView>
