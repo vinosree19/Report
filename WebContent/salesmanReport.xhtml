@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Report</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true" style="height:90%; width:100%;">
+		<p:layoutUnit position="center" style="height:90%; width:100%;">
+			<ui:include src="include.xhtml" />
+			<p:panel style="height: 90%;width: 99%" header="Salesman Report">
+				<h:form id="reportForm" style="height:90%; width:100%;">
+					<table style="height: 3%; width: 100%; padding-top: 10px">
+						<tr style="width: 100%">
+							<td style="width: 25%"><p:dataTable rows="10"
+									paginator="true" var="orders"
+									value="#{searchSalesReportBean.salesReportLst}">
+									<p:column headerText="Salesman" id="person">#{orders.person}</p:column>
+									<p:column headerText="Quantity" id="quantity">#{orders.quantity}</p:column>
+									<p:column headerText="Total Value" id="total">#{orders.total}</p:column>
+								</p:dataTable></td>
+							<td style="width: 30%"><p:lineChart id="lineChart"
+									value="#{lineChartBean.model}" style="width:100%"
+									xaxisLabel="Total Value" yaxisLabel="Quantity" /></td>
+							<td style="width: 30%"><p:pieChart id="pieChart"
+									value="#{pieChartBean1.model}" style="width:100%"
+									legendPosition="w" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</p:panel>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

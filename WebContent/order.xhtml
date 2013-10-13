@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Order Product</title>
+	<link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true" style="height:90%; width:100%;">
+		<p:layoutUnit position="center" style="height:90%; width:100%;">
+			<ui:include src="include.xhtml" />
+			<p:panel style="height: 90%;width: 99%" header="Order Product">
+				<h:form id="orderForm" style="height: 50%; width:60%">
+					<h:panelGrid columns="2" style="height: 100%;width: 100%">
+						<h:outputText value="Product : " />
+						<p:selectOneMenu id="combo" value="#{order.prodid}"
+							style="width: 210px">
+							<f:ajax listener="#{order.setProductRate}" execute="combo"
+								render="rate" />
+							<f:ajax listener="#{order.setTotalRate}" execute="combo"
+								render="total" />
+							<f:selectItems value="#{order.list}" />
+						</p:selectOneMenu>
+						<h:outputText value="Rate : " />
+						<p:inputText id="rate" value="#{order.rate}" disabled="true"
+							style="width: 210px"></p:inputText>
+						<h:outputText value="Quantity : " />
+						<p:spinner id="spin" min="1" max="1000" style="width: 210px"
+							value="#{order.quantity}">
+							<f:ajax listener="#{order.setTotalRate}" execute="spin"
+								render="total" />
+						</p:spinner>
+						<h:outputText value="Total Value : " />
+						<p:inputText id="total" disabled="true" style="width: 210px"
+							value="#{order.total}"></p:inputText>
+						<p:commandButton action="#{order.placeOrder}" value="Order"
+							update="orderForm" ajax="true"></p:commandButton>
+						<p:growl sticky="true" />
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

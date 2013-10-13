@@ -28,6 +28,7 @@ public class Order implements Serializable {
 	private String desc;
 
 	private Double rate;
+	private String person;
 	private static List<Product> productList;
 	private static List<String> list;
 	private static Map<String, Double> map;
@@ -133,8 +134,17 @@ public class Order implements Serializable {
 		this.desc = desc;
 	}
 
+	public String getPerson() {
+		return person;
+	}
+
+	public void setPerson(String person) {
+		this.person = person;
+	}
+
 	public void setProductRate() {
 		this.rate = map.get(prodid);
+		this.quantity = 1.0;
 	}
 
 	public void setTotalRate() {
@@ -143,7 +153,7 @@ public class Order implements Serializable {
 		}
 	}
 
-	public String placeOrder() {
+	public void placeOrder() {
 		if (prodid.equals("--SELECT--")) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -152,15 +162,12 @@ public class Order implements Serializable {
 		} else {
 			boolean result = OrderDAO.order(prodid, quantity, total, salesman);
 			if (result) {
-				return "login";
 			} else {
 				setEmpty();
 				HttpSession session = Util.getSession();
 				OrderDAO.getOrder(session.getAttribute("username").toString());
-				return "dashboard";
 			}
 		}
-		return null;
 	}
 
 	private void setEmpty() {

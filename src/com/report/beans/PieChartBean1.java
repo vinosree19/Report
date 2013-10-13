@@ -7,19 +7,20 @@ import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.chart.PieChartModel;
 
-@ManagedBean(name = "pieChartBean")
+@ManagedBean(name = "pieChartBean1")
 @SessionScoped
-public class PieChartBean {
+public class PieChartBean1 {
+	
 	private PieChartModel model;
 
 	private static List<Order> pieModelList;
 
-	public PieChartBean() {
+	public PieChartBean1() {
 		model = new PieChartModel();
 		refreshChart();
 	}
 
-	public PieChartBean(List<Order> list) {
+	public PieChartBean1(List<Order> list) {
 		refreshChart();
 	}
 
@@ -32,7 +33,7 @@ public class PieChartBean {
 	}
 
 	public void setPieModelList(List<Order> pieModelList) {
-		PieChartBean.pieModelList = pieModelList;
+		PieChartBean1.pieModelList = pieModelList;
 		refreshChart();
 	}
 
@@ -40,9 +41,10 @@ public class PieChartBean {
 		model = new PieChartModel();
 		if (null != pieModelList) {
 			for (Order order : pieModelList) {
-				model.set(order.getProdid(), order.getTotal());
+				model.set(order.getPerson(), order.getTotal());
 			}
 		}
 	}
+
 
 }

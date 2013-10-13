@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<table style="width: 100%; height: 2%">
+		<tr>
+			<td style="padding-top: 5px" align="left">
+				<h4>
+					<h:outputText value="Welcome! : " />
+					<h:outputText value="#{user.username}" />
+				</h4>
+			</td>
+			<td align="right"><p:commandButton action="#{user.dashboard}"
+					id="home" icon="ui-icon-home" title="Dashboard" /> <p:commandButton
+					action="#{user.orderProduct}" id="order" icon="ui-icon-pencil"
+					title="Order Product" /> <p:commandButton action="#{user.reportGeneration}"
+					id="report" icon="ui-icon-bookmark" title="Report" /> <p:commandButton action="#{report1.loadSalesmanReport}"
+					id="salesmanReport" icon="ui-icon-bookmark" title="Salesman Report" /> 
+					<p:commandButton
+					action="#{user.logout}" value="Logout" icon="ui-icon-extlink" ajax="true"></p:commandButton>
+					<p:tooltip for="home" value="Dashboard" showEffect="fade" hideEffect="fade"  />
+					<p:tooltip for="order" value="Order Products" showEffect="fade" hideEffect="fade"  /> 
+					<p:tooltip for="report" value="Report" showEffect="fade" hideEffect="fade"  /> 
+					<p:tooltip for="salesmanReport" value="Salesman Report" showEffect="fade" hideEffect="fade"  /> 
+					</td>
+		</tr>
+	</table>
+</ui:composition>

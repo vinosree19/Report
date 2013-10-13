@@ -16,6 +16,7 @@ public class SearchGridBean implements Serializable {
 	private static List<Order> orderList;
 	private static Map<String, Order> ordermap;
 
+
 	public SearchGridBean() {
 		ordermap = new HashMap<String, Order>();
 	}

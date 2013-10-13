@@ -17,20 +17,11 @@ public class BubbleChartBean {
 
 	public BubbleChartBean() {
 		model = new BubbleChartModel();
+		refreshChart();
 	}
 
 	public BubbleChartBean(List<Order> list) {
-		int i = 5;
-		model = new BubbleChartModel();
-		for (Order order : list) {
-			i = i + 3;
-			BubbleChartSeries series = new BubbleChartSeries();
-			series.setLabel(order.getProdid());
-			series.setX(order.getTotal().intValue());
-			series.setY(order.getQuantity().intValue());
-			series.setRadius(i);
-			model.add(series);
-		}
+		refreshChart();
 	}
 
 	public BubbleChartModel getModel() {
@@ -47,6 +38,7 @@ public class BubbleChartBean {
 
 	public void setBubbleModelList(List<Order> bubbleModelList) {
 		BubbleChartBean.bubbleModelList = bubbleModelList;
+		refreshChart();
 	}
 
 	public void refreshChart() {

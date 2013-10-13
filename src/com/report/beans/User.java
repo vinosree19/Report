@@ -85,6 +85,18 @@ public class User implements Serializable {
 		setEmpty();
 		return "user";
 	}
+	
+	public String dashboard() {
+		return "dashboard";
+	}
+	
+	public String orderProduct() {
+		return "order";
+	}
+	
+	public String reportGeneration() {
+		return "report";
+	}
 
 	public String lostPassword() {
 		return null;

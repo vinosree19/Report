@@ -8,20 +8,20 @@ import javax.faces.bean.SessionScoped;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
-@ManagedBean(name = "barChartBean")
+@ManagedBean(name = "lineChartBean")
 @SessionScoped
-public class BarChartBean {
+public class LineChartBean {
 
 	private CartesianChartModel model;
 
 	private static List<Order> chartModelList;
 
-	public BarChartBean() {
+	public LineChartBean() {
 		model = new CartesianChartModel();
 		refreshChart();
 	}
 
-	public BarChartBean(List<Order> list) {
+	public LineChartBean(List<Order> list) {
 		model = new CartesianChartModel();
 		refreshChart();
 	}
@@ -35,7 +35,7 @@ public class BarChartBean {
 	}
 
 	public void setChartModelList(List<Order> chartModelList) {
-		BarChartBean.chartModelList = chartModelList;
+		LineChartBean.chartModelList = chartModelList;
 		refreshChart();
 	}
 
@@ -44,8 +44,8 @@ public class BarChartBean {
 		if (null != chartModelList) {
 			for (Order order : chartModelList) {
 				ChartSeries chart = new ChartSeries();
-				chart.setLabel(order.getProdid());
-				chart.set(order.getSalesman(), order.getTotal());
+				chart.setLabel(order.getPerson());
+				chart.set(order.getDate(), order.getTotal());
 				model.addSeries(chart);
 			}
 		}
