@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.report.beans.BubbleChartBean;
-import com.report.beans.LineChartBean;
 import com.report.beans.Order;
 import com.report.beans.PieChartBean;
 import com.report.beans.PieChartBean1;
@@ -138,8 +137,6 @@ public class SearchDAO {
 	public static void createChartValue1(List<Order> list) {
 		PieChartBean1 pieChartBean = new PieChartBean1(list);
 		pieChartBean.setPieModelList(list);
-		LineChartBean lineChartBean = new LineChartBean(list);
-		lineChartBean.setChartModelList(list);
 	}
 
 }

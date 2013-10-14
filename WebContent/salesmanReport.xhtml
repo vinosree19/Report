@@ -15,21 +15,18 @@
 			<ui:include src="include.xhtml" />
 			<p:panel style="height: 90%;width: 99%" header="Salesman Report">
 				<h:form id="reportForm" style="height:90%; width:100%;">
-					<table style="height: 3%; width: 100%; padding-top: 10px">
+					<table style="width: 100%; height: 100%; padding-top: 25px">
 						<tr style="width: 100%">
-							<td style="width: 25%"><p:dataTable rows="10"
-									paginator="true" var="orders"
+							<td style="width: 35%; height: 100%"><p:dataTable rows="10"
+									paginator="true" var="orders" style="width:100%;height: 75%"
 									value="#{searchSalesReportBean.salesReportLst}">
 									<p:column headerText="Salesman" id="person">#{orders.person}</p:column>
 									<p:column headerText="Quantity" id="quantity">#{orders.quantity}</p:column>
 									<p:column headerText="Total Value" id="total">#{orders.total}</p:column>
 								</p:dataTable></td>
-							<td style="width: 30%"><p:lineChart id="lineChart"
-									value="#{lineChartBean.model}" style="width:100%"
-									xaxisLabel="Total Value" yaxisLabel="Quantity" /></td>
-							<td style="width: 30%"><p:pieChart id="pieChart"
-									value="#{pieChartBean1.model}" style="width:100%"
-									legendPosition="w" /></td>
+							<td style="width: 50%; height: 100%"><p:pieChart
+									id="pieChart" value="#{pieChartBean1.model}"
+									style="width:100%;height: 75%" legendPosition="w" /></td>
 						</tr>
 					</table>
 				</h:form>

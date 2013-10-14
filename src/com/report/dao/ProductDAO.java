@@ -33,7 +33,8 @@ public class ProductDAO {
 			map.put("--SELECT--", 0.0);
 			list.add(product);
 			while (rs.next()) {
-				Product product2 = new Product(rs.getString("prod_id"), rs.getString("prod_desc"), rs.getDouble("rate"));
+				Product product2 = new Product(rs.getString("prod_id"),
+						rs.getString("prod_desc"), rs.getDouble("rate"));
 				list.add(product2);
 				strings.add(rs.getString("prod_id"));
 				map.put(rs.getString("prod_id"), rs.getDouble("rate"));

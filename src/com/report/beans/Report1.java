@@ -61,7 +61,7 @@ public class Report1 implements Serializable {
 	public String loadReport() {
 		return "report";
 	}
-	
+
 	public String loadSalesmanReport() {
 		SearchDAO.searchReport2();
 		return "salesmanReport";

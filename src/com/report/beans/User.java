@@ -62,7 +62,8 @@ public class User implements Serializable {
 			setEmpty();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login! Please Try Again!",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Invalid Login! Please Try Again!",
 							"Please Try Again!"));
 			return "login";
 		} else {
@@ -85,15 +86,15 @@ public class User implements Serializable {
 		setEmpty();
 		return "user";
 	}
-	
+
 	public String dashboard() {
 		return "dashboard";
 	}
-	
+
 	public String orderProduct() {
 		return "order";
 	}
-	
+
 	public String reportGeneration() {
 		return "report";
 	}
@@ -108,12 +109,16 @@ public class User implements Serializable {
 		if (result.equalsIgnoreCase("SUCCESS")) {
 			return "login";
 		} else if (result.equalsIgnoreCase("USER")) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "User Already Exist!", "Please Try Again!"));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"User Already Exist!", "Please Try Again!"));
 			return "user";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Login!", "Please Try Again!"));
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Invalid Login!", "Please Try Again!"));
 			return "user";
 		}
 	}

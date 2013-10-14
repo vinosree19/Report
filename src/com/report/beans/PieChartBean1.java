@@ -10,7 +10,7 @@ import org.primefaces.model.chart.PieChartModel;
 @ManagedBean(name = "pieChartBean1")
 @SessionScoped
 public class PieChartBean1 {
-	
+
 	private PieChartModel model;
 
 	private static List<Order> pieModelList;
@@ -45,6 +45,5 @@ public class PieChartBean1 {
 			}
 		}
 	}
-
 
 }
